@@ -67,16 +67,15 @@ public class Message {
 	public static String saveMessage(Message message){
 		Connection connection = CommonUtil.getConnection();
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement("insert into news values "
-					+ "(id=?,user=?,news=?,lat=?,longi=?,area=?,createdon=?,title=?)");
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into news (id,user,news,lat,longi,area,title)"
+					+ "values (?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, CommonUtil.getPrimaryKey());
 			preparedStatement.setString(2, message.getUser());
 			preparedStatement.setString(3, message.getNews());
 			preparedStatement.setFloat(4, message.getLat());
 			preparedStatement.setFloat(5, message.getLongi());
 			preparedStatement.setString(6, message.getAreaName());
-			preparedStatement.setDate(7, (java.sql.Date) new Date());
-			preparedStatement.setString(8, message.getTitle());
+			preparedStatement.setString(7, message.getTitle());
 			
 			int insertedRow = preparedStatement.executeUpdate();
 			return "Success. Row count + "+insertedRow;
@@ -85,6 +84,17 @@ public class Message {
 			e.printStackTrace();
 			return "Faild to save message ";
 		}
+		
+		
 	}
-	
+	public static void main(String[] ss){
+		Message message = new Message();
+		message.setUser("dea06e0d-9c7c-4662-a60b-4e8b7cf6a46c");
+		message.setAreaName("SRM Mini Hall 2");
+		message.setLat(12.56734637f);
+		message.setLongi(34.76346737f);
+		message.setNews("Hakathon event going on");
+		message.setTitle("Hackathon");
+		System.out.println(saveMessage(message));
+	}
 }

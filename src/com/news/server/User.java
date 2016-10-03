@@ -36,8 +36,8 @@ public class User {
 	public static String saveUser(User user){
 		Connection connection = CommonUtil.getConnection();
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement("insert into user values "
-					+ "(id=?,username=?,password=?,userstatus=?)");
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into user (id,username,password,userstatus) "
+					+ "values (?,?,?,?)");
 			preparedStatement.setString(1, CommonUtil.getPrimaryKey());
 			preparedStatement.setString(2, user.getUsername());
 			preparedStatement.setString(3, user.getPassword());
@@ -51,7 +51,24 @@ public class User {
 			return "Faild to save message ";
 		}
 	}
+	
+	public static void main (String[] rr){
+		User user = new User();
+		user.setUsername("arockiaraj1994@gmail.com");
+		user.setPassword("123456");
+		System.out.println(saveUser(user));
+	}
+	
+	
 	public static String login(String username,String password){
-		
+		Connection connection = CommonUtil.getConnection();
+		/*try{
+			PreparedStatement preparedStatement = connection.
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Faild to save message ";
+		}*/
+		return null;
 	}
 }

@@ -13,13 +13,14 @@ public class CommonUtil {
 	
 	public static String getPrimaryKey(){
 		UUID uuid = UUID.randomUUID();
-		System.out.println(uuid.toString());
 		return uuid.toString();
 	}
 	public static Connection getConnection(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3030/newsapp","root","january1994");
+			String connectionURL  = "jdbc:mysql://127.0.0.1:3306/newsapp";
+			Connection connection = DriverManager.getConnection(connectionURL,"root","january1994");
+			//Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3030/newsapp","root","january1994");
 			/*Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("Select * from newsapp");
 			while(resultSet.next()){
@@ -48,6 +49,6 @@ public class CommonUtil {
 	
 	
 	public static void main(String[] test){
-		insertData();
+		getConnection();
 	}
 }
