@@ -36,6 +36,10 @@
     <servlet-name>MessageServlet</servlet-name>
     <url-pattern>/getFeeds</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MessageServlet</servlet-name>
+    <url-pattern>/postFeed</url-pattern>
+  </servlet-mapping>
   <filter>
     <filter-name>CorsFilter</filter-name>
     <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>

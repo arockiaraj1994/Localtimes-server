@@ -1,6 +1,8 @@
 package com.news.server;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 
 
@@ -49,9 +52,28 @@ public class MessageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Message message = new Message();
-		JSONObject jsonObject = (JSONObject) request.getAttribute("messagedata");
+		InputStream inputStream = request.getInputStream();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buf = new byte[32];
+        int reader=0;
+        while( reader >= 0 ) {
+            reader = inputStream.read(buf);
+            if( reader >= 0 ){
+            	byteArrayOutputStream.write(buf, 0, reader);
+            }
+        }
+        String postFeedData = new String(byteArrayOutputStream.toByteArray(), "UTF-8");
+        
+        JSONObject jsonObject = (JSONObject) JSONValue.parse(postFeedData);
 		
+        Message message = new Message();
+        message.setAreaName(jsonObject.get("area").toString());
+        message.setLat(Float.parseFloat(jsonObject.get("lat").toString()));
+        message.setLongi(Float.parseFloat(jsonObject.get("longi").toString()));
+        message.setNews(jsonObject.get("news").toString());
+        message.setTitle(jsonObject.get("title").toString());
+        message.setUser(jsonObject.get("user").toString());
+        
 		String insertRowsCount = Message.saveMessage(message);
 		response.getWriter().write(insertRowsCount);
 	}
