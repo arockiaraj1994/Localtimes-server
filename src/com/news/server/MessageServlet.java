@@ -37,7 +37,11 @@ public class MessageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		Message message = new Message();
+		
+		
+		String insertRowsCount = Message.saveMessage(message);
+		response.getWriter().write(insertRowsCount);
 	}
 
 }
