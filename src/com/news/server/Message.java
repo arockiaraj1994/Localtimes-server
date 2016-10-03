@@ -2,8 +2,12 @@ package com.news.server;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 public class Message {
@@ -87,6 +91,30 @@ public class Message {
 		
 		
 	}
+	public static String getMessages(){
+		Connection connection = CommonUtil.getConnection();
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("select id,user,news,area,title,createdon from news");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			JSONArray array = new JSONArray();
+			while(resultSet.next()){
+				 JSONObject jsonObject = new JSONObject();
+				 jsonObject.put("id", resultSet.getString("id"));
+				 jsonObject.put("user", resultSet.getString("user"));
+				 jsonObject.put("news", resultSet.getString("news"));
+				 jsonObject.put("area", resultSet.getString("area"));
+				 jsonObject.put("title", resultSet.getString("title"));
+				 jsonObject.put("createon", resultSet.getDate("createdon").toString());
+				 array.add(jsonObject);
+			}
+			return array.toJSONString();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
 	public static void main(String[] ss){
 		Message message = new Message();
 		message.setUser("dea06e0d-9c7c-4662-a60b-4e8b7cf6a46c");

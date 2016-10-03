@@ -34,7 +34,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>MessageServlet</servlet-name>
-    <url-pattern>/getMessage</url-pattern>
+    <url-pattern>/getFeeds</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>CorsFilter</filter-name>
