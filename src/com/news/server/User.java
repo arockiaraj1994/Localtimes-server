@@ -2,8 +2,8 @@ package com.news.server;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class User {
 	private String id;
@@ -62,13 +62,24 @@ public class User {
 	
 	public static String login(String username,String password){
 		Connection connection = CommonUtil.getConnection();
-		/*try{
-			PreparedStatement preparedStatement = connection.
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("select id,username,password where (username=?) and (password=?) and (userstatus=1)");
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			int count = resultSet.getRow();
+			String id = "";
+			if(count == 1){
+				while(resultSet.next()){
+					 id = resultSet.getString("id");
+					
+				}
+			}
+			return id;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "Faild to save message ";
-		}*/
-		return null;
+			return "";
+		}
 	}
 }

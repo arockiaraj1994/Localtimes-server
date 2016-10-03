@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 /**
  * Servlet implementation class SignupServlet
  */
@@ -27,7 +30,7 @@ public class SignupServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().write("");
 	}
 
 	/**
@@ -35,10 +38,13 @@ public class SignupServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String signupdata = request.getParameter("signupdata");
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(signupdata);
 		User user = new User();
-		
-		String userSaveResponse = User.saveUser(user);
-		response.getWriter().write(userSaveResponse);
+		user.setUsername(jsonObject.get("username").toString());
+		user.setPassword(jsonObject.get("password").toString());
+		String responseData = User.saveUser(user);
+		response.getWriter().write(responseData);
 	}
 
 }
