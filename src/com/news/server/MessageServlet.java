@@ -32,8 +32,16 @@ public class MessageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String messageData = Message.getMessages();
-		response.getWriter().write(messageData);
+		String messageId = request.getParameter("messageId");
+		if(messageId != null && !messageId.trim().isEmpty()){
+			System.out.println(messageId);
+			String singleMessageData  = Message.getSingleMessageById(messageId);
+			response.getWriter().write(singleMessageData);
+		}else {
+			String messageData = Message.getMessages();
+			response.getWriter().write(messageData);
+		}
+		
 	}
 
 	/**

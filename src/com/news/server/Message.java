@@ -125,4 +125,27 @@ public class Message {
 		message.setTitle("Hackathon");
 		System.out.println(saveMessage(message));
 	}
+	public static String getSingleMessageById(String messageId) {
+		Connection connection = CommonUtil.getConnection();
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("select id,user,news,area,title,createdon from news where id=?");
+			preparedStatement.setString(1, messageId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				 JSONObject jsonObject = new JSONObject();
+				 jsonObject.put("id", resultSet.getString("id"));
+				 jsonObject.put("user", resultSet.getString("user"));
+				 jsonObject.put("news", resultSet.getString("news"));
+				 jsonObject.put("area", resultSet.getString("area"));
+				 jsonObject.put("title", resultSet.getString("title"));
+				 jsonObject.put("createon", resultSet.getDate("createdon").toString());
+				 return jsonObject.toString();
+			}
+			return "";
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+	}
 }
