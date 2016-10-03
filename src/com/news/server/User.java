@@ -63,17 +63,14 @@ public class User {
 	public static String login(String username,String password){
 		Connection connection = CommonUtil.getConnection();
 		try{
-			PreparedStatement preparedStatement = connection.prepareStatement("select id,username,password where (username=?) and (password=?) and (userstatus=1)");
+			PreparedStatement preparedStatement = connection.prepareStatement("select id from user where username=? and password=? and userstatus=1");
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			int count = resultSet.getRow();
 			String id = "";
-			if(count == 1){
-				while(resultSet.next()){
-					 id = resultSet.getString("id");
-					
-				}
+			while(resultSet.next()){
+				 id = resultSet.getString("id");
+				 break;
 			}
 			return id;
 		}catch (SQLException e) {
