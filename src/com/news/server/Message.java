@@ -23,11 +23,9 @@ public class Message {
 	public void setCreateon(Date createon) {
 		this.createon = createon;
 	}
+	
 	public String getId() {
 		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	public String getUser() {
 		return user;
