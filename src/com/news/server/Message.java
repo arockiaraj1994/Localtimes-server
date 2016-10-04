@@ -119,7 +119,7 @@ public class Message {
 		try{
 			PreparedStatement preparedStatement = connection.prepareStatement("select id,user,news,area,title,createdon,distance from "
 					+ "(SELECT *,3956 * 2 * ASIN(SQRT( POWER(SIN((? - abs(dest.lat)) * pi()/180 / 2),2) + COS(? * pi()/180 ) * COS( abs(dest.lat) * pi()/180) * "
-					+ "POWER(SIN((? - abs(dest.longi)) * pi()/180 / 2), 2) )) as distance FROM news as dest) as fulldata where distance <= 0.200");
+					+ "POWER(SIN((? - abs(dest.longi)) * pi()/180 / 2), 2) )) as distance FROM news as dest) as fulldata where distance <= 1.0");
 			preparedStatement.setFloat(1, Float.parseFloat(latit));
 			preparedStatement.setFloat(2, Float.parseFloat(latit));
 			preparedStatement.setFloat(3, Float.parseFloat(longi));
@@ -133,7 +133,7 @@ public class Message {
 				 jsonObject.put("area", resultSet.getString("area"));
 				 jsonObject.put("title", resultSet.getString("title"));
 				 jsonObject.put("createon", resultSet.getDate("createdon").toString());
-				 jsonObject.put("distance", resultSet.getString("distance"));
+				 jsonObject.put("distance", resultSet.getString("distance").substring(0, 4));
 				 array.add(jsonObject);
 			}
 			return array.toJSONString();
