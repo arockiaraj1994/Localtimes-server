@@ -143,16 +143,7 @@ public class Message {
 			return "";
 		}
 	}
-	public static void main(String[] ss){
-		Message message = new Message();
-		message.setUser("dea06e0d-9c7c-4662-a60b-4e8b7cf6a46c");
-		message.setAreaName("SRM Mini Hall 2");
-		message.setLat(12.56734637f);
-		message.setLongi(34.76346737f);
-		message.setNews("Hakathon event going on");
-		message.setTitle("Hackathon");
-		System.out.println(saveMessage(message));
-	}
+	
 	public static String getSingleMessageById(String messageId) {
 		Connection connection = CommonUtil.getConnection();
 		try{

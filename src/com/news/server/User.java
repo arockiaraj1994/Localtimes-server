@@ -52,14 +52,6 @@ public class User {
 		}
 	}
 	
-	public static void main (String[] rr){
-		User user = new User();
-		user.setUsername("arockiaraj1994@gmail.com");
-		user.setPassword("123456");
-		System.out.println(saveUser(user));
-	}
-	
-	
 	public static String login(String username,String password){
 		Connection connection = CommonUtil.getConnection();
 		try{
