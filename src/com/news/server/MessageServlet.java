@@ -41,7 +41,10 @@ public class MessageServlet extends HttpServlet {
 			String singleMessageData  = Message.getSingleMessageById(messageId);
 			response.getWriter().write(singleMessageData);
 		}else {
-			String messageData = Message.getMessages();
+			String lati = request.getParameter("lati");
+			String longi = request.getParameter("longi");
+			System.out.println("Lati :"+lati +"\nLongi :"+longi);
+			String messageData = Message.getMessages(lati,longi);
 			response.getWriter().write(messageData);
 		}
 		
